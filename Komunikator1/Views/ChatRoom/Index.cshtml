@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Komunikator1.Models.Comment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2 class="text-success text-center">Witaj w komunikatorze</h2>
+@using (Html.BeginForm("PostComment", "ChatRoom", FormMethod.Post))
+{
+<span class="pull-right">
+    <span>
+        @if (Session["ImageUrl"].ToString().Length > 0)
+        {
+        <img src="@Url.Content(Session["ImageUrl"].ToString())" alt="Brak zdjecia" style="height: 64px" class="img-responsive img-circle" />
+        }
+        else
+        {
+        <img src="@Url.Content("~/Profile Images/defaultUserAvatar.jpg")" alt="Brak zdjecia" style="height: 64px" class="img-responsive img-circle" />
+        }
+        <input type="text" name="CommentText"
+               placeholder="Type new comment..." width:100%; height:70px;
+               font-size: 22px; margin-top:10px" />
+    </span>
+    <br /> <br />
+    <input type="submit" value="Post Comment"
+           class="btn btn-default pull-right" style="margin-bottom:10px" />
+</span>
+}
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr style="border:1px solid black">
+            <td>
+                <span style="margin-left:200px">
+                    @if (item.User.ImageUrl.Length > 0)
+                    {
+                        <img src="@Url.Content(item.User.ImageUrl)" alt="Brak zdjecia" style="height: 45px" class="img-responsive img-circle" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Profile Images/defaultUserAvatar.jpg")" alt="Brak zdjecia" style="height: 45px" class="img-responsive img-circle" />
+                    }
+                    @Html.DisplayFor(modelItem => item.Text)
+                </span>
+      
+                <span style="margin-left:10px">
+                    @item.CreatedOn
+                </span>
+                @foreach (var reply in item.Replies)
+                {
+                    <br />
+
+                    <span style="margin-left:200px">
+                        @if (reply.User.ImageUrl.Length > 0)
+                        {
+                            <img src="@Url.Content(reply.User.ImageUrl)" alt="Brak zdjecia" style="height: 45px" class="img-responsive img-circle" />
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Profile Images/defaultUserAvatar.jpg")" alt="Brak zdjecia" style="height: 45px" class="img-responsive img-circle" />
+                        }
+                    </span>
+                    <span style="font-size: 16px">
+                        @reply.Text
+                    </span>
+                    <span style="margin-left:10px">
+                        @reply.CreatedOn
+                    </span>
+                }
+                <br />
+                @using (Html.BeginForm("PostReply", "ChatRoom", FormMethod.Post))
+                {
+                    <input type="text" name="reply" placeholder="Type reply..."
+                           style="width:100%; height:70px; font-size: 22px; margin-top:10px" />
+                    <br />
+                    <input type="hidden" name="CID" value="@item.Id" />
+                    <input type="submit" value="Post Reply" class="btn btn-default" style="margin-top:10px" />
+                }
+
+
+            </td>
+        </tr>
+    }
+
+</table>

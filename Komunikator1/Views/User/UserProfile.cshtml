@@ -1,0 +1,70 @@
+﻿@model Komunikator1.Models.User
+
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2 class="text-center">Moje konto</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Konto od:
+
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @if(Model.ImageUrl.Length > 0)
+            {
+                <img src="@Url.Content(Model.ImageUrl)" alt="Brak zdjęcia" style="height:200px" class="img-responsive" />
+            }
+            <br /> <br />
+            @using (Html.BeginForm("UpdatePicture", "User", FormMethod.Post,
+                new { enctype = "multipart/form-data" }))
+            {
+                <input type="file" name="Picture" class="col-sm-2 form-control" />
+                <input type="submit" value="Save Image" class="btn btn-default" />
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
