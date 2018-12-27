@@ -10,7 +10,7 @@
 {
 <span class="pull-right">
     <span>
-        @if (Session["ImageUrl"].ToString().Length > 0)
+        @if (Session["ImageUrl"] != null && Session["ImageUrl"].ToString().Length > 0)
         {
         <img src="@Url.Content(Session["ImageUrl"].ToString())" alt="Brak zdjecia" style="height: 64px" class="img-responsive img-circle" />
         }
@@ -34,7 +34,7 @@
         <tr style="border:1px solid black">
             <td>
                 <span style="margin-left:200px">
-                    @if (item.User.ImageUrl.Length > 0)
+                    @if (item.User.ImageUrl != null && item.User.ImageUrl.Length > 0)
                     {
                         <img src="@Url.Content(item.User.ImageUrl)" alt="Brak zdjecia" style="height: 45px" class="img-responsive img-circle" />
                     }
@@ -53,7 +53,7 @@
                     <br />
 
                     <span style="margin-left:200px">
-                        @if (reply.User.ImageUrl.Length > 0)
+                        @if (reply.User.ImageUrl != null && reply.User.ImageUrl.Length > 0)
                         {
                             <img src="@Url.Content(reply.User.ImageUrl)" alt="Brak zdjecia" style="height: 45px" class="img-responsive img-circle" />
                         }

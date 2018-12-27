@@ -98,6 +98,7 @@ namespace Komunikator1.Controllers
         public ActionResult Logout()
         {
             Session["UserId"] = 0;
+            Session["ImageUrl"] = null;
             return RedirectToAction("Index", "Home");
 
         }
